@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebCalling Library Example</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      color: #e5e7eb;
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e293b 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .main-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(75, 85, 99, 0.3);
+      overflow: hidden;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    
+    .header p {
+      margin: 8px 0 0 0;
+      opacity: 0.9;
+      font-size: 16px;
+    }
+    
+    .container {
+      padding: 30px 25px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #d1d5db;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #374151;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: all 0.2s ease;
+      background: #1f2937;
+      color: #e5e7eb;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: #6366f1;
+      background: #111827;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+    
+    input::placeholder {
+      color: #6b7280;
+    }
+    
+    .button {
+      width: 100%;
+      padding: 16px 24px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+      margin-top: 10px;
+    }
+    
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+    }
+    
+    .button:active {
+      transform: translateY(0);
+    }
+    
+    .button-active {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    }
+    
+    .button-active:hover {
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+    }
+    
+    .button-connecting {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+    
+    .status {
+      margin-top: 20px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+      border-left: 4px solid #6366f1;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #e5e7eb;
+      border: 1px solid rgba(75, 85, 99, 0.3);
+    }
+    
+    .status::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulse 2s infinite;
+    }
+    
+    .status.connecting::before {
+      background: #f59e0b;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+      
+      .main-container {
+        border-radius: 16px;
+      }
+      
+      .header {
+        padding: 25px 20px;
+      }
+      
+      .header h1 {
+        font-size: 24px;
+      }
+      
+      .container {
+        padding: 25px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="header">
+      <h1>Web-Calling Demo</h1>
+      <p>Connect and make calls with Bolna AI</p>
+    </div>
+    
+    <div class="container">
+      <div class="form-group">
+        <label for="agent-id">Agent ID</label>
+        <input type="text" id="agent-id" placeholder="Enter your agent ID">
+      </div>
+      
+      <div class="form-group">
+        <label for="access-token">Access Token</label>
+        <input type="text" id="access-token" placeholder="Enter your access token">
+      </div>
+      
+      <div class="form-group">
+        <label for="websocket-host">Websocket Host</label>
+        <input type="text" id="websocket-host" placeholder="wss://example.com">
+      </div>
+      
+      <button id="call-button" class="button">Start Call</button>
+      
+      <div id="status" class="status">Status: Idle</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/gh/bolna-ai/web-call@v1.0.2/bolna-webcall-library.min.js"></script>
+  
+  <script>
+    const agentIdInput = document.getElementById('agent-id');
+    const accessTokenInput = document.getElementById('access-token');
+    const websocketHostInput = document.getElementById('websocket-host');
+    const callButton = document.getElementById('call-button');
+    const statusDiv = document.getElementById('status');
+    
+    let webCalling = null;
+    let lastConfig = null;
+    
+    function initializeWebCalling() {
+      const currentConfig = {
+        agentId: agentIdInput.value,
+        accessToken: accessTokenInput.value,
+        websocketHost: websocketHostInput.value
+      };
+      
+      if (!webCalling || JSON.stringify(currentConfig) !== JSON.stringify(lastConfig) || !webCalling.isCallActive()) {
+        webCalling = new BolnaWebCalling({
+          ...currentConfig,
+          contextData: {},
+          
+          onCallStateChange: (isActive) => {
+            updateUI(isActive, webCalling.isConnected());
+          },
+          onFirstAudioPacket: () => {
+            updateUI(true, true);
+          },
+          onError: (type, error) => {
+            console.log(`Error: ${type} - ${error.message || 'Unknown error'}`);
+          }
+        });
+        lastConfig = currentConfig;
+      }
+    }
+    
+    function updateUI(isActive, isConnected) {
+      if (isActive) {
+        callButton.textContent = isConnected ? 'End Call' : 'Connecting...';
+        callButton.className = isConnected ? 'button button-active' : 'button button-connecting';
+        statusDiv.textContent = isConnected ? 'Status: Connected' : 'Status: Connecting...';
+      } else {
+        callButton.textContent = 'Start Call';
+        callButton.className = 'button';
+        statusDiv.textContent = 'Status: Idle';
+      }
+    }
+    
+    callButton.addEventListener('click', () => {
+      initializeWebCalling();
+      
+      if (webCalling.isCallActive()) {
+        webCalling.endWebCall();
+      } else {
+        webCalling.initiateWebCall();
+      }
+    });
+    
+    websocketHostInput.value = 'wss://ws.bolna.ai/';
+  </script>
+</body>
+</html>
