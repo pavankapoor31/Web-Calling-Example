@@ -3,279 +3,427 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebCalling Library Example</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      line-height: 1.6;
-      color: #e5e7eb;
-      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e293b 100%);
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
-    }
-    
-    .main-container {
-      max-width: 500px;
-      margin: 0 auto;
-      background: rgba(17, 24, 39, 0.95);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(75, 85, 99, 0.3);
-      overflow: hidden;
-    }
-    
-    .header {
-      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-      color: white;
-      padding: 30px 20px;
-      text-align: center;
-    }
-    
-    .header h1 {
-      margin: 0;
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-    
-    .header p {
-      margin: 8px 0 0 0;
-      opacity: 0.9;
-      font-size: 16px;
-    }
-    
-    .container {
-      padding: 30px 25px;
-    }
-    
-    .form-group {
-      margin-bottom: 20px;
-    }
-    
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #d1d5db;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid #374151;
-      border-radius: 12px;
-      font-size: 16px;
-      transition: all 0.2s ease;
-      background: #1f2937;
-      color: #e5e7eb;
-    }
-    
-    input:focus {
-      outline: none;
-      border-color: #6366f1;
-      background: #111827;
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-    }
-    
-    input::placeholder {
-      color: #6b7280;
-    }
-    
-    .button {
-      width: 100%;
-      padding: 16px 24px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 600;
-      transition: all 0.2s ease;
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      color: white;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
-      margin-top: 10px;
-    }
-    
-    .button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
-    }
-    
-    .button:active {
-      transform: translateY(0);
-    }
-    
-    .button-active {
-      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
-    }
-    
-    .button-active:hover {
-      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
-    }
-    
-    .button-connecting {
-      opacity: 0.7;
-      cursor: not-allowed;
-      transform: none !important;
-    }
-    
-    .status {
-      margin-top: 20px;
-      padding: 16px 20px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-      border-left: 4px solid #6366f1;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: #e5e7eb;
-      border: 1px solid rgba(75, 85, 99, 0.3);
-    }
-    
-    .status::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #10b981;
-      animation: pulse 2s infinite;
-    }
-    
-    .status.connecting::before {
-      background: #f59e0b;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-    
-    
-    @media (max-width: 480px) {
-      body {
-        padding: 10px;
-      }
-      
-      .main-container {
-        border-radius: 16px;
-      }
-      
-      .header {
-        padding: 25px 20px;
-      }
-      
-      .header h1 {
-        font-size: 24px;
-      }
-      
-      .container {
-        padding: 25px 20px;
+  <title>Bolna AI Chat</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bolna': {
+              50: '#f0f9ff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a'
+            }
+          }
+        }
       }
     }
-  </style>
+  </script>
 </head>
-<body>
-  <div class="main-container">
-    <div class="header">
-      <h1>Web-Calling Demo</h1>
-      <p>Connect and make calls with Bolna AI</p>
+<body class="bg-gray-50 min-h-screen">
+  <div class="flex h-screen">
+    <!-- Left Sidebar -->
+    <div class="w-80 bg-white shadow-lg border-r border-gray-200 flex flex-col">
+      <!-- Sidebar Header -->
+      <div class="p-4 border-b border-gray-200">
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-lg font-semibold text-gray-800">Bolna AI Agents</h2>
+          <a href="https://platform.bolna.ai/" target="_blank" class="text-xs text-bolna-600 hover:text-bolna-700 underline">
+            Platform
+          </a>
+        </div>
+        <p class="text-sm text-gray-600">Connect and manage your agents</p>
+      </div>
+      
+      <!-- Access Token Section -->
+      <div class="p-4 border-b border-gray-200">
+        <div class="flex items-center justify-between mb-2">
+          <label for="access-token" class="block text-sm font-medium text-gray-700">Access Token</label>
+          <a href="https://platform.bolna.ai/developers" target="_blank" class="text-xs text-bolna-600 hover:text-bolna-700 underline">
+            Get Token
+          </a>
+        </div>
+        <input type="password" id="access-token" placeholder="Enter your access token" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-bolna-500 focus:border-transparent">
+        <div class="flex items-center mt-2">
+          <input type="checkbox" id="save-token" class="h-4 w-4 text-bolna-600 focus:ring-bolna-500 border-gray-300 rounded">
+          <label for="save-token" class="ml-2 text-sm text-gray-600">Save token locally</label>
+        </div>
+        <button id="fetch-agents-btn" class="w-full mt-3 px-4 py-2 bg-bolna-600 hover:bg-bolna-700 text-white rounded-lg text-sm font-medium transition-colors duration-200">
+          Fetch Agents
+        </button>
+      </div>
+      
+      <!-- Agents List -->
+      <div class="flex-1 overflow-y-auto p-4">
+        <div id="agents-list" class="space-y-2">
+          <div class="text-center text-gray-500 text-sm py-8">
+            <p class="mb-2">Enter your access token and click "Fetch Agents" to load your agents</p>
+            <p class="text-xs">
+              Need help? Visit the 
+              <a href="https://platform.bolna.ai/" target="_blank" class="text-bolna-600 hover:text-bolna-700 underline">Bolna Platform</a>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
-    
-    <div class="container">
-      <div class="form-group">
-        <label for="agent-id">Agent ID</label>
-        <input type="text" id="agent-id" placeholder="Enter your agent ID">
+
+    <!-- Main Chat Area -->
+    <div class="flex-1 flex flex-col">
+      <div class="max-w-2xl mx-auto bg-white shadow-lg rounded-2xl overflow-hidden h-full flex flex-col w-full">
+    <!-- Header -->
+    <div class="bg-bolna-600 text-white p-6 text-center">
+      <div class="flex items-center justify-center mb-2">
+        <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center mr-3">
+          <svg class="w-5 h-5 text-bolna-600" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+          </svg>
+        </div>
+        <h1 class="text-xl font-bold">Bolna AI</h1>
+      </div>
+      <p class="text-bolna-100 text-sm">Voice-powered AI assistant</p>
+      <div class="mt-2">
+        <a href="https://platform.bolna.ai/" target="_blank" class="text-xs text-bolna-200 hover:text-white underline">
+          Visit Bolna Platform
+        </a>
+      </div>
+    </div>
+
+    <!-- Current Agent Display -->
+    <div class="p-4 border-b bg-gray-50">
+      <div class="flex items-center justify-between">
+        <div>
+          <label class="block text-xs font-medium text-gray-700 mb-1">Current Agent</label>
+          <div id="current-agent-display" class="text-sm text-gray-600">No agent selected</div>
+        </div>
+        <div class="text-xs text-gray-500">
+          <span id="agent-status" class="px-2 py-1 bg-gray-200 rounded-full">Inactive</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="flex-1 p-4 overflow-y-auto" id="chat-container">
+      <div class="space-y-4">
+        <!-- Welcome Message -->
+        <div class="flex items-start space-x-3">
+          <div class="w-8 h-8 bg-bolna-100 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-bolna-600" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <div class="bg-gray-100 rounded-lg p-3 max-w-xs">
+            <p class="text-sm text-gray-700">Hi! I'm your Bolna AI assistant. Select an agent from the sidebar and click the call button to start a voice conversation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call Controls -->
+    <div class="p-4 border-t bg-gray-50">
+      <div class="flex items-center justify-center space-x-4">
+        <!-- Call Button -->
+        <button id="call-button" class="w-16 h-16 bg-bolna-600 hover:bg-bolna-700 text-white rounded-full flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+          <svg id="call-icon" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+          </svg>
+          <svg id="end-call-icon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+        
+        <!-- Status Indicator -->
+        <div class="flex items-center space-x-2">
+          <div id="status-dot" class="w-3 h-3 bg-gray-400 rounded-full"></div>
+          <span id="status-text" class="text-sm text-gray-600">Ready to call</span>
+        </div>
       </div>
       
-      <div class="form-group">
-        <label for="access-token">Access Token</label>
-        <input type="text" id="access-token" placeholder="Enter your access token">
+      <!-- Connection Status -->
+      <div id="connection-status" class="mt-3 text-center">
+        <div class="text-xs text-gray-500">
+          <span id="connection-text">Not connected</span>
+        </div>
       </div>
-      
-      <div class="form-group">
-        <label for="websocket-host">Websocket Host</label>
-        <input type="text" id="websocket-host" placeholder="wss://example.com">
+    </div>
       </div>
-      
-      <button id="call-button" class="button">Start Call</button>
-      
-      <div id="status" class="status">Status: Idle</div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/gh/bolna-ai/web-call@v1.0.2/bolna-webcall-library.min.js"></script>
   
   <script>
-    const agentIdInput = document.getElementById('agent-id');
+    // Configuration - you can hardcode these or use prompts
+    const CONFIG = {
+      agentId: 'your-agent-id-here', // Replace with your actual agent ID
+      accessToken: 'your-access-token-here', // Replace with your actual access token
+      websocketHost: 'wss://ws.bolna.ai'
+    };
+
+    // DOM elements
     const accessTokenInput = document.getElementById('access-token');
-    const websocketHostInput = document.getElementById('websocket-host');
+    const saveTokenCheckbox = document.getElementById('save-token');
+    const fetchAgentsBtn = document.getElementById('fetch-agents-btn');
+    const agentsList = document.getElementById('agents-list');
+    const currentAgentDisplay = document.getElementById('current-agent-display');
+    const agentStatus = document.getElementById('agent-status');
     const callButton = document.getElementById('call-button');
-    const statusDiv = document.getElementById('status');
-    
+    const callIcon = document.getElementById('call-icon');
+    const endCallIcon = document.getElementById('end-call-icon');
+    const statusDot = document.getElementById('status-dot');
+    const statusText = document.getElementById('status-text');
+    const connectionText = document.getElementById('connection-text');
+    const chatContainer = document.getElementById('chat-container');
+
+    // State
     let webCalling = null;
-    let lastConfig = null;
-    
-    function initializeWebCalling() {
-      const currentConfig = {
-        agentId: agentIdInput.value,
-        accessToken: accessTokenInput.value,
-        websocketHost: websocketHostInput.value
-      };
+    let isCallActive = false;
+    let isConnected = false;
+    let currentAgent = null;
+    let agents = [];
+
+    // Save/load access token from localStorage
+    function saveAccessToken() {
+      if (saveTokenCheckbox.checked) {
+        localStorage.setItem('bolna_access_token', accessTokenInput.value);
+        localStorage.setItem('bolna_save_token', 'true');
+      } else {
+        localStorage.removeItem('bolna_access_token');
+        localStorage.removeItem('bolna_save_token');
+      }
+    }
+
+    function loadAccessToken() {
+      const savedToken = localStorage.getItem('bolna_access_token');
+      const shouldSave = localStorage.getItem('bolna_save_token') === 'true';
       
-      if (!webCalling || JSON.stringify(currentConfig) !== JSON.stringify(lastConfig) || !webCalling.isCallActive()) {
-        webCalling = new BolnaWebCalling({
-          ...currentConfig,
-          contextData: {},
-          
-          onCallStateChange: (isActive) => {
-            updateUI(isActive, webCalling.isConnected());
-          },
-          onFirstAudioPacket: () => {
-            updateUI(true, true);
-          },
-          onError: (type, error) => {
-            console.log(`Error: ${type} - ${error.message || 'Unknown error'}`);
+      if (savedToken && shouldSave) {
+        accessTokenInput.value = savedToken;
+        saveTokenCheckbox.checked = true;
+      }
+    }
+
+    // Fetch agents from Bolna API
+    async function fetchAgents() {
+      const accessToken = accessTokenInput.value.trim();
+      
+      if (!accessToken) {
+        showMessage('Please enter your access token first', 'error');
+        return;
+      }
+
+      // Save token if checkbox is checked
+      saveAccessToken();
+
+      try {
+        fetchAgentsBtn.textContent = 'Loading...';
+        fetchAgentsBtn.disabled = true;
+
+        const response = await fetch('https://api.bolna.ai/v2/agent/all', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
           }
         });
-        lastConfig = currentConfig;
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        agents = data;
+        displayAgents(data);
+        showMessage(`Successfully loaded ${data.length} agents`, 'system');
+
+      } catch (error) {
+        console.error('Error fetching agents:', error);
+        showMessage(`Error fetching agents: ${error.message}`, 'error');
+        agentsList.innerHTML = '<div class="text-center text-red-500 text-sm py-8">Failed to load agents</div>';
+      } finally {
+        fetchAgentsBtn.textContent = 'Fetch Agents';
+        fetchAgentsBtn.disabled = false;
       }
     }
-    
-    function updateUI(isActive, isConnected) {
-      if (isActive) {
-        callButton.textContent = isConnected ? 'End Call' : 'Connecting...';
-        callButton.className = isConnected ? 'button button-active' : 'button button-connecting';
-        statusDiv.textContent = isConnected ? 'Status: Connected' : 'Status: Connecting...';
-      } else {
-        callButton.textContent = 'Start Call';
-        callButton.className = 'button';
-        statusDiv.textContent = 'Status: Idle';
+
+    // Display agents in the sidebar
+    function displayAgents(agentsData) {
+      if (agentsData.length === 0) {
+        agentsList.innerHTML = '<div class="text-center text-gray-500 text-sm py-8">No agents found</div>';
+        return;
       }
+
+      agentsList.innerHTML = agentsData.map(agent => `
+        <div class="border border-gray-200 rounded-lg p-3 hover:bg-gray-50 transition-colors">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-medium text-sm text-gray-800">${agent.agent_name}</h3>
+            <span class="px-2 py-1 text-xs rounded-full ${agent.agent_status === 'processed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">
+              ${agent.agent_status}
+            </span>
+          </div>
+          <p class="text-xs text-gray-500 mb-3">ID: ${agent.id.substring(0, 8)}...</p>
+          <button 
+            onclick="selectAgent('${agent.id}', '${agent.agent_name}')" 
+            class="w-full px-3 py-2 bg-bolna-600 hover:bg-bolna-700 text-white rounded text-sm font-medium transition-colors duration-200"
+          >
+            Talk with ${agent.agent_name}
+          </button>
+        </div>
+      `).join('');
     }
-    
-    callButton.addEventListener('click', () => {
-      initializeWebCalling();
+
+    // Select an agent
+    function selectAgent(agentId, agentName) {
+      currentAgent = { id: agentId, name: agentName };
+      currentAgentDisplay.textContent = agentName;
+      agentStatus.textContent = 'Ready';
+      agentStatus.className = 'px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs';
+      showMessage(`Selected agent: ${agentName}`, 'system');
+    }
+
+    // Initialize WebCalling instance
+    function initializeWebCalling() {
+      if (webCalling && webCalling.isCallActive()) {
+        return webCalling;
+      }
+
+      if (!currentAgent) {
+        showMessage('Please select an agent first', 'error');
+        return null;
+      }
+
+      const accessToken = accessTokenInput.value.trim();
       
-      if (webCalling.isCallActive()) {
-        webCalling.endWebCall();
+      if (!accessToken) {
+        showMessage('Please enter your access token', 'error');
+        return null;
+      }
+
+        webCalling = new BolnaWebCalling({
+        agentId: currentAgent.id,
+        accessToken: accessToken,
+        websocketHost: CONFIG.websocketHost,
+          contextData: {},
+          
+        onCallStateChange: (active) => {
+          isCallActive = active;
+          updateUI();
+          if (active) {
+            showMessage('Call started! You can now speak to the AI assistant.', 'system');
+          } else {
+            showMessage('Call ended.', 'system');
+          }
+        },
+        
+          onFirstAudioPacket: () => {
+          isConnected = true;
+          updateUI();
+          showMessage('Connected! AI is ready to respond.', 'system');
+          },
+        
+          onError: (type, error) => {
+          // console.error('Bolna Error:', type, error);
+          // showMessage(`Error: ${error.message || 'Unknown error occurred'}`, 'error');
+          // isCallActive = false;
+          // isConnected = false;
+          // updateUI();
+        }
+      });
+
+      return webCalling;
+    }
+    
+    // Update UI based on call state
+    function updateUI() {
+      if (isCallActive) {
+        if (isConnected) {
+          // Call is active and connected
+          callButton.className = 'w-16 h-16 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105';
+          callIcon.classList.add('hidden');
+          endCallIcon.classList.remove('hidden');
+          statusDot.className = 'w-3 h-3 bg-green-500 rounded-full animate-pulse';
+          statusText.textContent = 'Connected';
+          connectionText.textContent = 'AI is listening...';
+        } else {
+          // Call is active but connecting
+          callButton.className = 'w-16 h-16 bg-yellow-600 hover:bg-yellow-700 text-white rounded-full flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105';
+          callIcon.classList.add('hidden');
+          endCallIcon.classList.remove('hidden');
+          statusDot.className = 'w-3 h-3 bg-yellow-500 rounded-full animate-pulse';
+          statusText.textContent = 'Connecting...';
+          connectionText.textContent = 'Establishing connection...';
+        }
       } else {
-        webCalling.initiateWebCall();
+        // Call is not active
+        callButton.className = 'w-16 h-16 bg-bolna-600 hover:bg-bolna-700 text-white rounded-full flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105';
+        callIcon.classList.remove('hidden');
+        endCallIcon.classList.add('hidden');
+        statusDot.className = 'w-3 h-3 bg-gray-400 rounded-full';
+        statusText.textContent = 'Ready to call';
+        connectionText.textContent = 'Not connected';
+      }
+    }
+
+    // Show message in chat
+    function showMessage(text, type = 'system') {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'flex items-start space-x-3';
+      
+      const iconDiv = document.createElement('div');
+      iconDiv.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0';
+      
+      const messageContent = document.createElement('div');
+      messageContent.className = 'rounded-lg p-3 max-w-xs';
+      
+      if (type === 'system') {
+        iconDiv.className += ' bg-bolna-100';
+        iconDiv.innerHTML = '<svg class="w-4 h-4 text-bolna-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"/></svg>';
+        messageContent.className += ' bg-gray-100';
+        messageContent.innerHTML = `<p class="text-sm text-gray-700">${text}</p>`;
+      } else if (type === 'error') {
+        iconDiv.className += ' bg-red-100';
+        iconDiv.innerHTML = '<svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>';
+        messageContent.className += ' bg-red-100';
+        messageContent.innerHTML = `<p class="text-sm text-red-700">${text}</p>`;
+      }
+      
+      messageDiv.appendChild(iconDiv);
+      messageDiv.appendChild(messageContent);
+      
+      chatContainer.querySelector('.space-y-4').appendChild(messageDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    // Handle checkbox change
+    saveTokenCheckbox.addEventListener('change', saveAccessToken);
+
+    // Handle fetch agents button click
+    fetchAgentsBtn.addEventListener('click', fetchAgents);
+
+    // Handle call button click
+    callButton.addEventListener('click', () => {
+      if (isCallActive) {
+        // End call
+        if (webCalling) {
+        webCalling.endWebCall();
+        }
+      } else {
+        // Start call
+        const instance = initializeWebCalling();
+        if (instance) {
+          instance.initiateWebCall();
+        }
       }
     });
-    
-    websocketHostInput.value = 'wss://ws.bolna.ai/';
+
+    // Make selectAgent function global so it can be called from onclick
+    window.selectAgent = selectAgent;
+
+    // Initialize UI and load saved token
+    loadAccessToken();
+    updateUI();
   </script>
 </body>
 </html>
