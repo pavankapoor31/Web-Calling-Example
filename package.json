@@ -1,0 +1,23 @@
+{
+  "name": "bolna-ai-chat",
+  "version": "1.0.0",
+  "description": "Bolna AI Voice Chat Interface",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static site - no build needed'",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "bolna",
+    "ai",
+    "voice",
+    "chat",
+    "websocket"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
