@@ -152,8 +152,7 @@
     </div>
   </div>
 
-  <!-- <script src="https://cdn.jsdelivr.net/gh/bolna-ai/web-call@v1.0.2/bolna-webcall-library.min.js"></script> -->
-  <script src="file:///Users/pavan/Documents/bolna/web-call/bolna-webcall-library.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/bolna-ai/web-call@v1.0.2/bolna-webcall-library.min.js"></script>
   
   <script>
     // Configuration - you can hardcode these or use prompts
@@ -162,6 +161,7 @@
       accessToken: 'your-access-token-here', // Replace with your actual access token
       websocketHost: 'wss://ws.bolna.ai',
       enableMicInterruptions:true,
+      queueProcessingInterval: 50, // Default 50ms
       onMediaPermissionGranted:()=>{
         console.log("callback on media permissions given")
       }
@@ -171,6 +171,7 @@
     const accessTokenInput = document.getElementById('access-token');
     const saveTokenCheckbox = document.getElementById('save-token');
     const fetchAgentsBtn = document.getElementById('fetch-agents-btn');
+    const queueIntervalSelect = 50;
     const agentsList = document.getElementById('agents-list');
     const currentAgentDisplay = document.getElementById('current-agent-display');
     const agentStatus = document.getElementById('agent-status');
@@ -311,6 +312,7 @@
         accessToken: accessToken,
         websocketHost: CONFIG.websocketHost,
         enableMicInterruptions:CONFIG.enableMicInterruptions,
+        queueProcessingInterval: parseInt(queueIntervalSelect.value),
         contextData: {},
           
         onCallStateChange: (active) => {
